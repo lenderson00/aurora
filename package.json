@@ -1,0 +1,15 @@
+{
+  "name": "aurora",
+  "version": "0.0.1",
+  "description": "Framer Components direct from your projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.4"
+  }
+}
