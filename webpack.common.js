@@ -2,18 +2,15 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
 
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
-const TerserWebpackPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  devtool: 'cheap-module-source-map',
-  optimization: {
-    minimize: false,
-  },
   entry: {
     popup: path.resolve(__dirname, 'src/popup', 'popup.tsx'),
     options: path.resolve(__dirname, 'src/options', 'options.tsx'),
+    background: path.resolve(__dirname, 'src/background', 'background.ts'),
+    contentScript: path.resolve(__dirname, 'src/contentScript', 'contentScript.ts'),
   },
   module: {
     rules: [
@@ -29,6 +26,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin({
+      cleanStaleWebpackAssets: false,
+    }),
     new CopyPlugin({
       patterns: [
         {
@@ -43,30 +43,7 @@ module.exports = {
     ])
 
   ],
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
-    minimize: true,
-    minimizer: [
-      new TerserWebpackPlugin({
-        terserOptions: {
-          compress: {
-            drop_console: true,
-          },
-          output: {
-            comments: false,
-          },
-          sourceMap: true,
-          // A opção abaixo desativa a geração de 'eval'
-          // no código minimizado
-          parse: {
-            bare_returns: true,
-          },
-        },
-      }),
-    ],
-  },
+  
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
